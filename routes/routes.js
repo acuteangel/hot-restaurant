@@ -25,6 +25,13 @@ exports.reserveApiRoute_GET = function (server) {
     });
 }
 
+
+exports.waitlistApiRoute_GET = function (server) {
+    server.get("/api/waitlist", function (req, res) {
+        return res.json(data.waitlist);
+    });
+}
+
 exports.reserveApiRoute_POST = function (server) {
     server.post("/", function (req, res) {
         // Push new reservation to data.
@@ -40,5 +47,6 @@ exports.setRoutes = function (server) {
     exports.viewRoute_GET(server);
     exports.reserveRoute_GET(server);
     exports.reserveApiRoute_GET(server);
+    exports.waitlistApiRoute_GET(server);
     exports.reserveApiRoute_POST(server);
 }

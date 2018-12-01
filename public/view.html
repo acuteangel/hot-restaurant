@@ -10,6 +10,13 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+  
+  <!-- (copied from NYT Search example) Style to fix the issue of text extending past card length -->
+  <style>
+    .card-body a {
+      word-break: break-all;
+    }
+  </style>
 </head>
 
 <body>
@@ -21,41 +28,90 @@
       <hr>
       <h3 class="text-center">Current Reservations and Waiting List</span></h3>
       <div class="text-center">
-        <a href="reserve.html"><button class="btn btn-primary btn-lg"><span class="fas fa-table"></span> Make Reservation</button></a>
-        <a href="home.html"><button class="btn btn-outline-secondary btn-lg"><span class="fas fa-home"></span></button></a>
+        <a href="/reserve"><button class="btn btn-primary btn-lg"><span class="fas fa-table"></span> Make Reservation</button></a>
+        <a href="/"><button class="btn btn-outline-secondary btn-lg"><span class="fas fa-home"></span></button></a>
       </div>  
     </div>
-    <div class="row">     
-    </div>
-  </div>
-  <div class="card" style="width: 18rem;">
+  
+
+  <!-- This row will display all of the reservations + waitlist -->
+  <div class="row">
+    <div class="col-sm-12">
+      <br>
+
+      <!-- This card will display reservations -->
+      <div class="card">
+
+        <!-- card Heading for the reserved tables box -->
         <div class="card-header">
-          Current Reservations
-        </div>
-        <div id="wait-list"> 
-            <div class="card" style="width: 18rem;">1. Joe</div>
-            <div class="card" style="width: 18rem;">1. Bob</div>
-            <div class="card" style="width: 18rem;">1. Jim</div>
-        </div>
-        
-    </div>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-           Waiting List
-        </div>   
-        <div id="wait-list"> 
-            <div class="card" style="width: 18rem;">1. Mary</div>
-            <div class="card" style="width: 18rem;">1. Kate</div>
-            <div class="card" style="width: 18rem;">1. Ellen</div>
+            <strong>
+            <i class="fa fa-table"></i> Reserved Tables</strong>
         </div>
 
-        </div> 
-    </div>
-  
-        <div class="container">
-              <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a>
+        <!-- This main card will display reservations -->
+        <div class="card-body" id="reservation-section">
         </div>
-     
+
+        <!-- card Heading for the waitlist box -->
+        <div class="card-header">
+            <strong>
+            <i class="fa fa-table"></i> Waitlist</strong>
+        </div>
+
+        <!-- This main card will hold each of the waitlisted reservations -->
+        <div class="card-body" id="waitlist-section">
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+            <a href="/api/reserve">API Table Link</a> | <a href="/api/waitlist">API Wait List</a>
+      </div>
+    </footer>  
+    <script type="text/javascript">
+
+          function displayReservations() {
+            $.get("/api/reserve", function(data) {
+              for (var i = 0; i < data.length; i++) {
+                var listGroupItem = $("<li class='reservation-list-group-item'>");
+      
+                listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+                listGroupItem.append($("<h3>").text("Phone: " + data[i].phone));
+                listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+      
+                $("#reservation-section").append(listGroupItem);
+              }
+              if (data.length > 5) {
+                for (var i = 0; i < data.length; i++) {
+                var listGroupItem = $("<li class='waitlist-list-group-item'>");
+      
+                listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+                listGroupItem.append($("<h3>").text("Phone: " + data[i].phone));
+                listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+      
+                $("#waitlist-section").append(listGroupItem);
+              }
+            }
+            });
+          }
+          function displayWaitlist() {
+            $.get("/api/waitlist", function(data) {
+              for (var i = 0; i < data.length; i++) {
+                var listGroupItem = $("<li class='waitlist-list-group-item'>");
+      
+                listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+                listGroupItem.append($("<h3>").text("Phone: " + data[i].phone));
+                listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+      
+                $("#waitlist-section").append(listGroupItem);
+              }
+            });
+          }
+          displayReservations();
+          displayWaitlist();
+        </script>
 </body>
 
 </html>
