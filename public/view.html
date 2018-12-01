@@ -32,7 +32,7 @@
         <a href="/"><button class="btn btn-outline-secondary btn-lg"><span class="fas fa-home"></span></button></a>
       </div>  
     </div>
-  </div>
+  
 
   <!-- This row will display all of the reservations + waitlist -->
   <div class="row">
@@ -74,9 +74,7 @@
 
           function displayReservations() {
             $.get("/api/reserve", function(data) {
-              console.log("displayReservations " + data);
               for (var i = 0; i < data.length; i++) {
-                console.log(data[i]);
                 var listGroupItem = $("<li class='reservation-list-group-item'>");
       
                 listGroupItem.append($("<h2>").text("Name: " + data[i].name));
@@ -85,13 +83,22 @@
       
                 $("#reservation-section").append(listGroupItem);
               }
+              if (data.length > 5) {
+                for (var i = 0; i < data.length; i++) {
+                var listGroupItem = $("<li class='waitlist-list-group-item'>");
+      
+                listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+                listGroupItem.append($("<h3>").text("Phone: " + data[i].phone));
+                listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+      
+                $("#waitlist-section").append(listGroupItem);
+              }
+            }
             });
           }
           function displayWaitlist() {
             $.get("/api/waitlist", function(data) {
               for (var i = 0; i < data.length; i++) {
-                console.log("displayWaitlist " + data);
-                console.log(data[i]);
                 var listGroupItem = $("<li class='waitlist-list-group-item'>");
       
                 listGroupItem.append($("<h2>").text("Name: " + data[i].name));

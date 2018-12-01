@@ -1,10 +1,25 @@
 var reservations = [{
-        name: 'Angel',
+        name: 'Angel 1',
         phone: '123-345-567',
         email: 'angel@gmail.com',
     },
     {
-        name: 'German',
+        name: 'German 2',
+        phone: '123-345-567',
+        email: 'German@gmail.com',
+    },
+    {
+        name: '3',
+        phone: '123-345-567',
+        email: 'angel@gmail.com',
+    },
+    {
+        name: '4',
+        phone: '123-345-567',
+        email: 'German@gmail.com',
+    },
+    {
+        name: '5',
         phone: '123-345-567',
         email: 'German@gmail.com',
     }
