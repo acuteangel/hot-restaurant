@@ -25,6 +25,7 @@ var reservations = [{
     }
 ];
 
+
 var waitlist = [{
     name: 'Lynn',
     phone: '123-345-567',

@@ -25,6 +25,7 @@ exports.reserveApiRoute_GET = function (server) {
     });
 }
 
+
 exports.waitlistApiRoute_GET = function (server) {
     server.get("/api/waitlist", function (req, res) {
         return res.json(data.waitlist);
